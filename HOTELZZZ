@@ -1,0 +1,178 @@
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Contracts;
+using System.Runtime.InteropServices;
+
+namespace HotelMANAGEMENTSZ
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello, World!");
+
+            Console.WriteLine("Do  you think ");
+        }
+    }
+
+    public abstract class User
+    {
+        public string Name { get; set; }
+        public string Password { get; set; }
+        string Email { get; set; }
+        int PhoneNumber { get; set; }
+      string ID { get; set; }
+       
+
+        public User(string name,string password,string email,int phoneNumber,string id)
+        {
+            Name = name;    
+                    Email = email;
+            PhoneNumber = phoneNumber;  
+            ID = id;    
+
+            Password = password;    
+        }
+        public virtual string DisplayDetails()
+        {
+            return$"Name:{Name} Password:{Password} Email:{Email} PhoneNumber:{PhoneNumber} ID:{ID}";
+        }
+
+    }
+
+    public class Customer:User
+    {
+       int BookedRooms { get; set; }
+        public Customer(int bookedRooms,string name,string password,string email,int phoneNumber,string id):base(name,password,email,phoneNumber,id )
+        {
+            BookedRooms = bookedRooms;
+        }
+        public override string DisplayDetails()
+        {
+            return base.DisplayDetails();
+        }
+        public void ReserveRoom(Room room)
+        {
+            room.ReserveRoom(); 
+        }
+       
+        
+
+    }
+    public class Receptionist:User
+    {
+        public Receptionist(string name,string password,string email,int phoneNumber,string id):base (name,password,email,phoneNumber,id) 
+        {
+
+        }
+        public override string DisplayDetails()
+        {
+            return base.DisplayDetails();
+        }
+        public void ReserveRoom()
+        {
+
+        }
+       
+
+    }
+
+    public class Room
+    {
+        bool Isavailable { get; set; }
+
+        public Room(bool isAvaialable)
+        {
+          this.Isavailable = isAvaialable;   
+        }
+
+        public string GetDetails()
+        {
+            return $"{Isavailable}";
+        }
+        public void ReserveRoom()
+        {
+            Isavailable = false ;   
+        }
+      
+
+
+
+    }        
+
+        
+
+    public class HotelSystem
+    {
+        public  void UserRegistration(Room room,User user)
+        {
+
+        }
+            
+        
+
+
+    }
+    public class Hotel:HotelSystem 
+    {
+        List<Room> Availablerooms = new List<Room>();
+        List<Room> bookedRooms = new List<Room>();
+        string Name { get; set; }
+        string Location { get; set; }
+
+
+        public Hotel()
+        {
+
+        }
+        public void DisplayAvailablerRooms()
+        {
+            foreach(Room room in Availablerooms)
+            {
+                Console.WriteLine(room.GetDetails());
+            }
+        }
+
+        public void DisplayBookedRooms()
+        {
+            foreach (Room room in bookedRooms)
+            {
+                Console.WriteLine(room.GetDetails());
+            }
+        }
+
+    }
+
+
+
+
+    public enum StyleRoom
+    {
+        TwinSizeRoom,
+        KinGSizeRoom,
+        QueenSizeRoom
+
+
+
+    }
+
+    public class Reservation:HotelSystem
+    {
+        DateTime StartTime { get; set; }
+        DateTime EndTime { get; set; }
+        int ReservationNumber { get; set; }
+
+        public Reservation(DateTime startTime, DateTime endTime,int reservationNumber)
+        {
+            ReservationNumber = reservationNumber;
+            StartTime = startTime;
+            EndTime = endTime;          
+        }
+        public string Getdetails()
+        {
+            return $"StartTime:{StartTime} EndTime:{EndTime} ReservationNUmber:{ReservationNumber}";
+        }
+
+    }
+
+
+}
